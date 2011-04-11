@@ -17,3 +17,7 @@ require.paths.unshift(__dirname);
 
 require.paths.unshift(__dirname + "/../demo/plugin");
 require.paths.unshift(__dirname + "/../demo/template");
+
+require.paths.unshift(__dirname + "/node-github/lib");
+require.paths.unshift(__dirname + "/node-github/support/async/lib");
+require.paths.unshift(__dirname + "/node-github/support/oauth/lib");
