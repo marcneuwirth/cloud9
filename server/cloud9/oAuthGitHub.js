@@ -61,8 +61,11 @@ var oAuthGitHub = function (req, res, next, ide) {
             });
         });
     }
-    else {
+    else if(req.session.uid) {
         ide.handle(req, res, next);
+    }
+    else {
+        return next();
     }
 };
 
