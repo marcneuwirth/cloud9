@@ -1,8 +1,5 @@
 exports.Config = {
-    workspace: "/usr/local/workspace/cloud9/",
+    workspace: "/var/www/workspace",
     port: 3000,
-    user: [
-        {name: "marcneuwirth"},
-        {name: "marcneuwirth2"}
-    ]
+    user: "marcneuwirth"
 };

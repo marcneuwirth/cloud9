@@ -36,15 +36,7 @@ exports.main = function(options) {
         };
         var socketIo = IO.listen(server, socketOptions);
         socketIo.on("connection", function(client) {
-            if(typeof user == 'object'){
-                var length = user.length;
-                while(length--){
-                    ide.addClientConnection(user[length].name, client, null);    
-                }
-            }
-            else {
-                ide.addClientConnection(user, client, null);
-            }
+            ide.addClientConnection(user, client, null);
         });
         
         var name = projectDir.split("/").pop();
@@ -59,23 +51,7 @@ exports.main = function(options) {
             version: options.version
         };
         var ide = new IdeServer(serverOptions, server, exts);
-        
-        if(typeof user == 'object'){
-            var length = user.length;
-            while(length--){
-                
-                var permissions = User.OWNER_PERMISSIONS;
-                
-                if(user[length].permission === "collaborator"){   
-                    permissions = User.COLLABORATOR_PERMISSIONS;
-                }
-                
-                ide.addUser(user[length].name, permissions);
-            }
-        }
-        else {
-            ide.addUser(user, User.OWNER_PERMISSIONS);
-        }
+        ide.addUser(user, User.OWNER_PERMISSIONS);
         
         return function(req, res, next) {
             if(req.session.uid && !ide.hasUser(req.session.uid)){
