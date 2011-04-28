@@ -54,10 +54,17 @@ exports.main = function(options) {
         ide.addUser(user, User.OWNER_PERMISSIONS);
         
         return function(req, res, next) {
-            if(!ide.hasUser(user)){
-                ide.addUser(user, User.OWNER_PERMISSIONS);
+            if(user === "owner"){
+                //allow all users
+                ide.handle(req, res, next);
             }
-            oAuthGitHub(req, res, next, ide);
+            else {
+
+                if(!ide.hasUser(user)){
+                    ide.addUser(user, User.OWNER_PERMISSIONS);
+                }
+                oAuthGitHub(req, res, next, ide);
+            }
         };
     };
     
