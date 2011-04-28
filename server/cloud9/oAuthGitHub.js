@@ -8,8 +8,9 @@ var github = new GitHubApi(true);
 var gitHubUser = github.getUserApi();
 var repo = github.getRepoApi();
 
-var clientId = "xxxxxxxxxxxxxxxxxxxx";
-var secret = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+var clientId = "7495c469b22103ff0255";
+var secret = "1623e8a9a1e0e10842e2bdcffca88c4c1de77907";
+
 var oauth = new OAuth2(clientId, secret, 'https://github.com/', 'login/oauth/authorize', 'login/oauth/access_token');
 var User = require("./user");
 
@@ -25,6 +26,7 @@ var oAuthGitHub = function (req, res, next, ide) {
         ide.handle(req, res, next);
     }
     else if (path == "/" && !query.code) {
+        console.log("Sending to GitHub");
         res.writeHead(303, {
             Location: oauth.getAuthorizeUrl({ 
               redirect_uri: 'http://c9/',
@@ -36,6 +38,7 @@ var oAuthGitHub = function (req, res, next, ide) {
     } 
     // URL called by github after authenticating
     else if (path == "/" && query.code) {
+        console.log("Authorizing User");
         // upgrade the code to an access token
         oauth.getOAuthAccessToken(query.code, {}, function (err, access_token, refresh_token) {
             if (err) {
@@ -45,11 +48,13 @@ var oAuthGitHub = function (req, res, next, ide) {
             req.session.accessToken = access_token;
             
             // use github API            
-                gitHubUser.show(function(err, user) {
+            gitHubUser.show(function(err, user) {
                 if (err) {
                     console.log(err);
-                    return next();
+                    return next(err);
                 }
+
+                console.log("User Authorized: " + user.login);
                 req.session.uid = user.login;
     
                 if(ide.getUser(req)) {    

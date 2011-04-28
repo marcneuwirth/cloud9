@@ -54,8 +54,8 @@ exports.main = function(options) {
         ide.addUser(user, User.OWNER_PERMISSIONS);
         
         return function(req, res, next) {
-            if(req.session.uid && !ide.hasUser(req.session.uid)){
-                return next();   
+            if(!ide.hasUser(user)){
+                ide.addUser(user, User.OWNER_PERMISSIONS);
             }
             oAuthGitHub(req, res, next, ide);
         };
