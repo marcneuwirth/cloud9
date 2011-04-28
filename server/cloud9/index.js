@@ -17,7 +17,8 @@ exports.main = function(options) {
     var projectDir = options.workspace,
         port = options.port,
         ip = options.ip,
-        user = options.user || "owner",
+        user = options.user,
+        username = options.username,
         group = options.group;
         
     if (!Path.existsSync(projectDir)) 
@@ -36,7 +37,7 @@ exports.main = function(options) {
         };
         var socketIo = IO.listen(server, socketOptions);
         socketIo.on("connection", function(client) {
-            ide.addClientConnection(user, client, null);
+            ide.addClientConnection(username, client, null);
         });
         
         var name = projectDir.split("/").pop();
@@ -51,17 +52,17 @@ exports.main = function(options) {
             version: options.version
         };
         var ide = new IdeServer(serverOptions, server, exts);
-        ide.addUser(user, User.OWNER_PERMISSIONS);
+        ide.addUser(username, User.OWNER_PERMISSIONS);
         
         return function(req, res, next) {
-            if(user === "owner"){
+            if(username === "owner"){
                 //allow all users
                 ide.handle(req, res, next);
             }
             else {
 
-                if(!ide.hasUser(user)){
-                    ide.addUser(user, User.OWNER_PERMISSIONS);
+                if(!ide.hasUser(username)){
+                    ide.addUser(username, User.OWNER_PERMISSIONS);
                 }
                 oAuthGitHub(req, res, next, ide);
             }
@@ -83,7 +84,7 @@ exports.main = function(options) {
     if (group)
         process.setgid(group);
     if (user)
-        //process.setuid(user);
+        process.setuid(user);
 
     server.listen(port, ip);
 };
