@@ -1,4 +1,5 @@
 exports.Config = {
-    workspace: "/var/www/workspace",
+    workspace: ".",
+    ip: "127.0.0.1",
     port: 3000
 };
