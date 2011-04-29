@@ -8,14 +8,14 @@ var github = new GitHubApi(true);
 var gitHubUser = github.getUserApi();
 var repo = github.getRepoApi();
 
+//This OAuth Application has the main url and callback url
+//set to http://c9/
+
 var clientId = "7495c469b22103ff0255";
 var secret = "1623e8a9a1e0e10842e2bdcffca88c4c1de77907";
 
 var oauth = new OAuth2(clientId, secret, 'https://github.com/', 'login/oauth/authorize', 'login/oauth/access_token');
 var User = require("./user");
-
-// for demo purposes use one global access token
-// in production this has to be stored in a user session
 
 var oAuthGitHub = function (req, res, next, ide) {
     var url = Url.parse(req.url);
@@ -29,7 +29,7 @@ var oAuthGitHub = function (req, res, next, ide) {
         console.log("Sending to GitHub");
         res.writeHead(303, {
             Location: oauth.getAuthorizeUrl({ 
-              redirect_uri: 'http://c9/',
+              redirect_uri: req.headers.referer,
               scope: "user,repo,gist"
             })
         });
@@ -57,6 +57,8 @@ var oAuthGitHub = function (req, res, next, ide) {
                 console.log("User Authorized: " + user.login);
                 req.session.uid = user.login;
     
+                //if the GitHub user is in the config
+                //continute on to the ide
                 if(ide.getUser(req)) {    
                     ide.handle(req, res, next);
                 }
