@@ -52,18 +52,16 @@ exports.main = function(options) {
             version: options.version
         };
         var ide = new IdeServer(serverOptions, server, exts);
-        ide.addUser(username, User.OWNER_PERMISSIONS);
         
         return function(req, res, next) {
+            ide.addUser(username, User.OWNER_PERMISSIONS);
+
             if(username === "owner"){
                 //allow all users
+                req.session.uid = username;
                 ide.handle(req, res, next);
             }
             else {
-
-                if(!ide.hasUser(username)){
-                    ide.addUser(username, User.OWNER_PERMISSIONS);
-                }
                 oAuthGitHub(req, res, next, ide);
             }
         };
