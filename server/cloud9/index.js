@@ -67,7 +67,7 @@ exports.main = function(options) {
         };
     };
     
-    var server =  Connect.createServer();
+    var server = Connect.createServer();
     //server.use(Connect.logger());
     server.use(Connect.conditionalGet());
     server.use(Connect.cookieDecoder());

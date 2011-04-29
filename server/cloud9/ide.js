@@ -248,7 +248,6 @@ Ide.DEFAULT_PLUGINS = [
 
         user.addClientConnection(client, message);
     };
-
     this.onUserMessage = function(user, message, client) {
         this.execHook("command", user, message, client);
     };
