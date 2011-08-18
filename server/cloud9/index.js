@@ -18,7 +18,7 @@ exports.main = function(options) {
         port = options.port,
         ip = options.ip,
         user = options.user,
-	username = options.username,
+	    username = options.username,
         group = options.group;
 
     if (!Path.existsSync(projectDir))
