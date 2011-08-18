@@ -1,6 +1,3 @@
-[submodule "support/socket.io"]
-	path = support/socket.io
-	url = http://github.com/ajaxorg/Socket.IO-node.git
 [submodule "support/connect"]
 	path = support/connect
 	url = http://github.com/senchalabs/connect.git
@@ -25,3 +22,9 @@
 [submodule "support/gnu-builds"]
 	path = support/gnu-builds
 	url = git://github.com/ajaxorg/gnu-builds.git
+[submodule "support/node-github"]
+	path = support/node-github
+	url = https://github.com/ajaxorg/node-github.git
+[submodule "support/socket.io"]
+	path = support/socket.io
+	url = https://github.com/mikedeboer/Socket.IO-node.git
