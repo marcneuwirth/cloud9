@@ -56,14 +56,14 @@
                 height: 20px;
                 display: block;
                 background-repeat:no-repeat;
-                background-position: 0 1px;
+                background-position: 2px 1px;
             }
 
             .btnsearchiconOver span {
-                background-position: 0 -20px;
+                background-position: 2px -20px;
             }
             .btnsearchiconDown span {
-                background-position: 0 -40px;
+                background-position: 2px -40px;
             }
         ]]></a:style>
         <a:presentation>
@@ -100,7 +100,7 @@
                 border: 1px solid #afafaf;
                 margin: 0;
                 outline: none;
-                font-family: Tahoma;
+                font-family: Tahoma, Arial;
                 font-size: 12px;
                 text-overflow: ellipsis;
                 -webkit-box-shadow: 0px 1px 0px #ffffff;
